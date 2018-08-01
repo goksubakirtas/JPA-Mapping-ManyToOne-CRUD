@@ -30,18 +30,15 @@ public class CommentService {
     public Comment getCommentById(@PathVariable(value ="comment_id") Long commentId ) {
         Optional<Comment> comment = commentRepository.findById(commentId);
         if (!comment.isPresent()) {
-            //Logger.getLogger("Post with id: "+ id+" not found");
             log.info("Post with id: " + commentId + " not found");
         }
         return comment.get();
     }
 
     public Comment createComment(Post postRequest, @Valid @RequestBody Comment commentRequest){
-        Comment comment=Comment.builder()
-                .text(commentRequest.getText())
-                .post(postRequest)
-                .build();
-        return commentRepository.save(comment);
+        commentRequest.setText(commentRequest.getText());
+        commentRequest.setPost(postRequest);
+        return commentRepository.save(commentRequest);
     }
 
     public Comment updateComment(Long commentId, @Valid @RequestBody Comment commentRequest , Post postRequest) {

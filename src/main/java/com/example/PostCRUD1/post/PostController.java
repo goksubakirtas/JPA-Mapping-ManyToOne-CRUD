@@ -14,7 +14,6 @@ public class PostController {
     private final PostService postService;
 
     @GetMapping
-
     public Page<Post> getAllPost(Pageable pageable){
         return postService.getAllPost(pageable);
     }

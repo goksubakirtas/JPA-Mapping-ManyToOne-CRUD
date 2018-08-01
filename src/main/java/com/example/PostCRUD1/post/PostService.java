@@ -1,20 +1,16 @@
 package com.example.PostCRUD1.post;
 
 import com.example.PostCRUD1.comment.CommentService;
-import com.example.PostCRUD1.model.Comment;
 import com.example.PostCRUD1.model.Post;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
-
 import javax.validation.Valid;
-import java.util.List;
 import java.util.*;
-import java.util.Set;
+
 
 @Service
 @Slf4j
@@ -33,13 +29,9 @@ public class PostService {
         return postRepository.findAll(pageable);
     }
 
-
-
-
     public Post getPostById(@PathVariable(value ="post_id") Long postId ){
         Optional<Post> post= postRepository.findById(postId);
         if (!post.isPresent()){
-            //Logger.getLogger("Post with id: "+ id+" not found");
             log.info("Post with id: "+ postId+" not found");
         }
         return post.get();
@@ -54,7 +46,6 @@ public class PostService {
         post.setName(postRequest.getName());
         return  postRepository.save(post);
     }
-
 
     public void deletePost(@PathVariable(value = "post_id") Long postId){
         postRepository.deleteById(postId);
